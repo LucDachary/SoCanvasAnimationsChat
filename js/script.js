@@ -102,7 +102,7 @@ function step()
 	 * Tous les points précédemment tracés deviennent 5% plus transparents.
 	 * Après 20 appels nous retrouvons du noir.
 	 */
-	var opacity = 0.025;
+	var opacity = 0.05;
 	ctx.save();
 	ctx.globalAlpha = opacity;
 	ctx.fillStyle = "black";
@@ -118,7 +118,6 @@ function step()
 			message.Refresh(i * cw, y);
 		}
 		else{
-			//ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * cw, y);
 			ctx.fillText(String.fromCharCode(97 + Math.floor(Math.random() * 26)), i * cw, y);
 		}
 

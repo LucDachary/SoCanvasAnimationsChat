@@ -24,38 +24,6 @@ h1, h2, h3, h4, h5, h6{
 #matrix{
 	position:fixed;
 }
-/*
-table{
-	width: 100%;
-}
-
-input[type="text"]{
-	padding: 0.5em;
-	color: #333;
-	width: 100%;
-}
-
-input[type="submit"], .submit_like{
-	padding: 0.3em 1em;
-	border-radius: 1px;
-	background-color: rgba(177, 202, 0, 0.1);
-	background-color: #CCCCCC;
-	border: 1px gray solid;
-	color: black;
-	text-decoration: none;
-}
-input[type="submit"]:focus{
-	box-shadow: 0 0 5px rgb(177, 202, 0);
-}
-input[type="submit"]:active{
-	box-shadow: 0 0 10px rgb(177, 202, 0);
-}
-
-#operations{
-	list-style-type: none;
-	padding: 0;
-}
-*/
 
 .w50{ width: 50%; }
 .w25{ width: 25%; }

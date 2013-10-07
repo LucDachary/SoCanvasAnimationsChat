@@ -1,48 +1,46 @@
-/**
- * \brief WLetter represents a white letter to show on the matrix.
- * \param c The character to draw.
+/*
+ * Une lettre blanche sur la matrice.
+ * \param c Le caractère à afficher
+ * \param x L'abscisse
+ * \param y L'ordonnée
  */
 WLetter = function(c, x, y)
 {
-	//TODO : ensure we have the good types
-	//TODO : ensure the values are relevant
 	var _c = c;
 	var _x = x;
 	var _y = y;
+	var _is_displayed = false; /* La lettre n'est pas dessinée à la création */
+	var _timestamp = new Date().getTime(); /* Moment de l'instanciation */
 
-	/*
-	 * TODO : il serait plus intéressant de retrouver l'opacité de la cellule depuis le contexte de dessin 2D...
-	 */
 	var _opacity = 0;
 
 	/**
-	 * \brief Refreshes the layout of the character.
-	 * \param ctx The 2D context
+	 * \brief Dessine le caractère.
+	 * \param ctx Le contexte de dessin 
+	 * \param with_shadow true pour afficher l'ombrage
 	 */
-	this.Refresh = function(ctx, opacity)
+	this.Refresh = function(ctx, with_shadow)
 	{
+		_is_displayed = true;
+
 		ctx.save();
-		//Erase the previous information area
-		ctx.fillStyle = "black";
-		ctx.fillText(_c, _x, _y);
-		if(undefined != opacity)
+
+		if(true === with_shadow)
 		{
-			ctx.fillStyle = "rgba(255, 255, 255, " + opacity + ")";
-			_opacity = opacity;
+			ctx.shadowOffsetX = 0;
+			ctx.shadowOffsetY = 0;
+			ctx.shadowBlur = 15;
+			ctx.shadowColor = "rgba(255, 255, 255, " + _opacity + ")";
 		}
-		else
-		{
-			ctx.fillStyle = "white";
-			_opacity = 1;
-		}
-		ctx.font = "20pt monospace";
+
+		ctx.fillStyle = "white";
 		ctx.fillText(_c, _x, _y);
 		ctx.restore();
 	}
 
 	/**
-	 * \brief Checks if I am the point at this x and y.
-	 * \return this if I'm at this point, null otherwise.
+	 * \brief Compare la position demandée avec la nôtre.
+	 * \return this si notre lettre est sur ce point, false sinon.
 	 */
 	this.IsMyPosition = function(x, y)
 	{
@@ -50,16 +48,39 @@ WLetter = function(c, x, y)
 	}
 
 	/**
-	 * \brief Register the changement of opacity.
-	 * \param opacity The opacity level (between 0 and 1) of the fade
+	 * \brief Accesseur lecture/écriture.
+	 * \param opacity L'opacité entre 0 et 1
+	 * \return L'opacité si opacity n'est pas renseigné.
 	 */
-	this.Fade = function(opacity)
+	this.Opacity = function(opacity)
 	{
-		_opacity -= opacity;
+		if(undefined != opacity)
+		{
+			if(opacity < 0)
+				_opacity = 0;
+			else
+				_opacity = opacity;
+			//console.log("Je passe de " + _opacity + ", à " + opacity);
+		}
+		else
+			return _opacity;
 	}
 
-	this.Opacity = function()
+	/**
+	 * \brief Accesseur en lecture.
+	 * \return true si la lettre a déjà été dessinée, false sinon.
+	 */
+	this.IsDisplayed = function()
 	{
-		return _opacity;
+		return _is_displayed;
+	}
+
+	/**
+	 * \brief Accesseur en lecture.
+	 * \return Le moment de l'instanciation.
+	 */
+	this.Timestamp = function()
+	{
+		return _timestamp;
 	}
 }
